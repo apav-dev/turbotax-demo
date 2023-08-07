@@ -104,10 +104,6 @@ export default function Specialties({ specialties }: SpecialtiesProps) {
                 {specialties?.[actionIdx]}
               </a>
             </h3>
-            <p className="mt-2 text-sm text-gray-500">
-              Doloribus dolores nostrum quia qui natus officia quod et dolorem.
-              Sit repellendus qui ut at blanditiis et quo et molestiae.
-            </p>
           </div>
         </div>
       ))}
