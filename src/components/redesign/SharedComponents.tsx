@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useEffect, useReducer, useRef} from "react";
+import React, {PropsWithChildren, useEffect, useRef, useState} from "react";
 import Button from "../atoms/Button";
 import StarFill from "../../assets/icons/StarFill";
 import StarHalf from "../../assets/icons/StarHalf";
@@ -282,7 +282,7 @@ export const MatchingCtaButton: React.FC<MatchingCtaProps> = (props) => {
   const config = useConfig();
   const matchingLink = useMatchingLink();
   const isOffboarding = useProHasLabel(Label.OffboardInProgress);
-  const [_, forceRender] = useReducer((val) => val + 1, 0);
+  const [dynamicMatchingLink, setDynamicMatchingLink] = useState('about:blank');
 
   const showCTAs = config.showMatchingCTAs && !isOffboarding;
   if (!showCTAs) return null;
@@ -291,7 +291,7 @@ export const MatchingCtaButton: React.FC<MatchingCtaProps> = (props) => {
     // The MatchingCtaButton won't have the correct matchingLink based on the url params
     // since the initial render is server side. We need to trigger a re-render that updates
     // the matchingLink based on the url params once we are on the client browser
-    setTimeout(() => {forceRender();}, 200);
+    setTimeout(() => {setDynamicMatchingLink(matchingLink);}, 200);
   }, []);
 
   return (
@@ -299,7 +299,7 @@ export const MatchingCtaButton: React.FC<MatchingCtaProps> = (props) => {
       as={"a"}
       id={props.id}
       iconBefore={props.icon ? <props.icon /> : undefined}
-      href={matchingLink}
+      href={dynamicMatchingLink}
       className={props.className}
       pageExperience={props.section}
       size={props.size || "large"}
